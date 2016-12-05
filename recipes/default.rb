@@ -2,9 +2,9 @@
 # Cookbook Name:: bosh-jumpbox
 # Recipe:: default
 #
-# Author:: Andrei Krasnitski <xaaabk@gmail.com>
+# Author:: Andrei Krasnitski <andrei.krasnitski@altoros.com>
 #
-# Copyright 2015, Andrei Krasnitski
+# Copyright 2016, Andrei Krasnitski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

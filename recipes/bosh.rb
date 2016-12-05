@@ -2,9 +2,9 @@
 # Cookbook Name:: bosh-jumpbox
 # Recipe:: bosh
 #
-# Author:: Andrei Krasnitski <xaaabk@gmail.com>
+# Author:: Andrei Krasnitski <andrei.krasnitski@altoros.com>
 #
-# Copyright 2015, Andrei Krasnitski
+# Copyright 2016, Andrei Krasnitski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,12 +28,22 @@ remote_file node['bosh-init']['path'] do
   action :create
 end
 
-ark 'spiff' do
-  url node['spiff']['release']
-  creates 'spiff'
-  path node['spiff']['path']
-  mode 0755
+remote_file node['spiff']['path'] do
+  source node['spiff']['release']
+  owner 'root'
+  group 'root'
+  mode '0755'
   checksum node['spiff']['checksum']
+  action :create
+end
+
+ark 'cf' do
+  url node['cf']['release']
+  path node['cf']['path']
+  mode 0755
+  creates 'cf'
+  strip_components 0
+  checksum node['cf']['checksum']
   action :cherry_pick
 end
 
@@ -46,23 +56,21 @@ remote_file node['spruce']['path'] do
   action :create
 end
 
+remote_file node['fly']['path'] do
+  source node['fly']['release']
+  owner 'root'
+  group 'root'
+  mode '0755'
+  checksum node['fly']['checksum']
+  action :create
+end
+
 gems = [
-  'rubygems-update', 'bundler', 'bosh_cli', 'bosh-workspace', 'cf-uaac'
+  'rubygems-update', 'bundler', 'bosh_cli', 'cf-uaac'
 ]
 
 gems.each do |gem|
   gem_package gem do
     action :upgrade
   end
-end
-
-remote_file "#{Chef::Config['file_cache_path']}/cf-cli-installer-#{node['cf-cli']['version']}.deb" do
-  source node['cf-cli']['release']
-  mode '0644'
-  checksum node['cf-cli']['checksum']
-end
-
-dpkg_package "cf-cli-#{node['cf-cli']['version']}" do
-  source "#{Chef::Config['file_cache_path']}/cf-cli-installer-#{node['cf-cli']['version']}.deb"
-  action :install
 end

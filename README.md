@@ -19,21 +19,17 @@ curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk
 - [apt](https://github.com/chef-cookbooks/apt)
 - [ark](https://github.com/burtlo/ark)
 - [golang](https://github.com/NOX73/chef-golang)
-- [ruby-ng](https://github.com/3ofcoins/chef-cookbook-ruby-ng)
-- [terraform](https://github.com/rosstimson/chef-terraform.git)
 
 Packages included
 ------------
-- bosh_cli (latest)
-- bosh-init (0.0.92)
-- bosh-workspace (latest)
-- cf-cli (6.18.1)
-- direnv (2.8.1)
-- ruby (2.3.1)
-- spiff (1.0.7)
-- spruce (1.4.2)
-- terraform (0.6.11)
-- uaac (latest)
+- bosh_cli
+- bosh-init
+- cf-cli
+- ruby
+- spiff
+- spruce
+- terraform
+- uaac
 
 Usage
 ------------

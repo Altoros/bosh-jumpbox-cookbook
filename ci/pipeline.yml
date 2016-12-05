@@ -1,0 +1,343 @@
+groups:
+- name: deps
+  jobs:
+  - spruce
+  - spiff
+  - cf-cli
+  - bosh-init
+  - terraform
+  - fly
+- name: deliver
+  jobs:
+  - run-test-kitchen
+  - merge-to-master
+jobs:
+- name: spruce
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: spruce
+      resource: spruce-release
+      trigger: true
+  - task: update-spruce
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: spruce
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - spruce
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: spiff
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: spiff
+      resource: spiff-release
+      trigger: true
+  - task: update-spiff
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: spiff
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - spiff
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: cf-cli
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: cf-cli
+      resource: cf-cli-release
+      trigger: true
+  - task: update-cf-cli
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: cf-cli
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - cf-cli
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: bosh-init
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: bosh-init
+      resource: bosh-init-release
+      trigger: true
+  - task: update-bosh-init
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: bosh-init
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - bosh-init
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: terraform
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: terraform
+      resource: terraform-release
+      trigger: true
+  - task: update-terraform
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: terraform
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - terraform
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: fly
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: fly
+      resource: fly-release
+      trigger: true
+  - task: update-fly
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: fly
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - fly
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
+- name: run-test-kitchen
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook-develop
+      resource: cookbook-develop
+      trigger: true
+  - task: test-kitchen
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/docker-chef
+          - tag: latest
+      inputs:
+      - name: cookbook-develop
+      run:
+        path: "cookbook-develop/ci/scripts/kitchen-ci.sh"
+      params:
+        AWS_ACCESS_KEY_ID: {{aws-access-key-id}}
+        AWS_SECRET_ACCESS_KEY: {{aws-secret-key-id}}
+        AWS_SSH_KEY_ID: {{aws-ssh-key-id}}
+        AWS_SSH_KEY: {{aws-ssh-key}}
+        AWS_SSH_KEY_FILE: {{aws-ssh-key-file}}
+- name: merge-to-master
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook-develop
+      resource: cookbook-develop
+      passed: [run-test-kitchen]
+      trigger: true
+    - get: cookbook
+      resource: cookbook
+  - task: merge-to-master
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      outputs:
+      - name: cookbook-to-master
+      run:
+        path: "cookbook-develop/ci/scripts/merge-to-master.sh"
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
+  - put: cookbook
+    params:
+      repository: cookbook-to-master
+
+resources:
+- name: cookbook
+  type: git
+  source:
+    uri: {{cookbook-git-uri}}
+    branch: {{cookbook-git-branch}}
+    private_key : {{cookbook-git-key}}
+- name: cookbook-develop
+  type: git
+  source:
+    uri: {{cookbook-git-uri}}
+    branch: {{cookbook-git-branch-tests}}
+    private_key : {{cookbook-git-key}}
+- name: spruce-release
+  type: github-release
+  source:
+    user: geofffranks
+    repository: spruce
+    release: true
+    access_token: {{github-access-token}}
+- name: spiff-release
+  type: github-release
+  source:
+    user: cloudfoundry-incubator
+    repository: spiff
+    release: true
+    access_token: {{github-access-token}}
+- name: cf-cli-release
+  type: github-release
+  source:
+    user: cloudfoundry
+    repository: cli
+    release: true
+    access_token: {{github-access-token}}
+- name: bosh-init-release
+  type: github-release
+  source:
+    user: cloudfoundry
+    repository: bosh-init
+    release: true
+    access_token: {{github-access-token}}
+- name: terraform-release
+  type: github-release
+  source:
+    user: hashicorp
+    repository: terraform
+    release: true
+    access_token: {{github-access-token}}
+- name: fly-release
+  type: github-release
+  source:
+    user: concourse
+    repository: concourse
+    release: true
+    access_token: {{github-access-token}}
