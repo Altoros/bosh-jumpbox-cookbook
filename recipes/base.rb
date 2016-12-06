@@ -32,7 +32,6 @@ end
 
 include_recipe 'ark'
 include_recipe 'golang'
-include_recipe 'terraform'
 include_recipe 'ruby-ng::dev'
 
 remote_file node['direnv']['path'] do
@@ -51,4 +50,13 @@ bash 'direnv_shell' do
   EOH
   user 'ubuntu'
   action :nothing
+end
+
+ark 'terraform' do
+  url node['terraform']['release']
+  creates 'terraform'
+  path node['terraform']['path']
+  mode 0755
+  checksum node['terraform']['checksum']
+  action :cherry_pick
 end

@@ -35,3 +35,4 @@ default['spiff']['release'] = 'https://github.com/cloudfoundry-incubator/spiff/r
 default['spruce']['checksum'] = 'd51c75ae3d2d0d8166374a1e2c34c0c19f646abfb8c8115853d8d74d0ede67e7'
 default['spruce']['path'] = '/usr/local/bin/spruce'
 default['spruce']['release'] = 'https://github.com/geofffranks/spruce/releases/download/v1.6.0/spruce-linux-amd64'
+default['terraform']['path'] = '/usr/local/bin/'

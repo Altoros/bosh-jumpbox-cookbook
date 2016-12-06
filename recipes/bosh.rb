@@ -47,7 +47,7 @@ remote_file node['spruce']['path'] do
 end
 
 gems = [
-  'rubygems-update', 'bundler', 'bosh_cli', 'bosh-workspace', 'cf-uaac'
+  'rubygems-update', 'bundler', 'bosh_cli', 'cf-uaac'
 ]
 
 gems.each do |gem|
