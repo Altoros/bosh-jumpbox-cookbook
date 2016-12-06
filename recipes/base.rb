@@ -22,7 +22,8 @@
 include_recipe 'apt'
 
 packages = %w(vim zip unzip curl wget git cmake make libreadline6-dev
-              zlib1g-dev libssl-dev libgmp3-dev python-pip libnss-myhostname)
+              zlib1g-dev libssl-dev libgmp3-dev python-pip libnss-myhostname
+              ruby-dev)
 
 packages.each do |pkg|
   package pkg do
@@ -32,7 +33,6 @@ end
 
 include_recipe 'ark'
 include_recipe 'golang'
-include_recipe 'ruby-ng::dev'
 
 remote_file node['direnv']['path'] do
   source node['direnv']['release']

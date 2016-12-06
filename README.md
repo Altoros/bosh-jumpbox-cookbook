@@ -6,7 +6,7 @@ Set of recipes for provisioning BOSH [Jumpbox](https://bosh.io/docs/terminology.
 
 ## Requirements
 ### Platform
-- Ubuntu (14.04+)
+- Ubuntu (16.04+)
 
 ### Chef
 - **[ChefDK 0.10.0](https://github.com/chef/chef-dk) or higher**
@@ -19,7 +19,6 @@ curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk
 - [apt](https://github.com/chef-cookbooks/apt)
 - [ark](https://github.com/burtlo/ark)
 - [golang](https://github.com/NOX73/chef-golang)
-- [ruby-ng](https://github.com/3ofcoins/chef-cookbook-ruby-ng)
 
 Packages included
 ------------

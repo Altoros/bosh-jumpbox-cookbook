@@ -11,6 +11,5 @@ source_ur        'https://github.com/Infra-Red/bosh-jumpbox'
 depends 'apt'
 depends 'ark'
 depends 'golang'
-depends 'ruby-ng'
 
-supports 'ubuntu', '>= 14.04'
+supports 'ubuntu', '>= 16.04'

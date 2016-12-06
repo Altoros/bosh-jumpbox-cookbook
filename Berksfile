@@ -7,4 +7,3 @@ metadata
 cookbook 'apt'
 cookbook 'ark'
 cookbook 'golang'
-cookbook 'ruby-ng'
