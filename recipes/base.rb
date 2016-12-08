@@ -2,9 +2,9 @@
 # Cookbook Name:: bosh-jumpbox
 # Recipe:: base
 #
-# Author:: Andrei Krasnitski <xaaabk@gmail.com>
+# Author:: Andrei Krasnitski <andrei.krasnitski@altoros.com>
 #
-# Copyright 2015, Andrei Krasnitski
+# Copyright 2016, Andrei Krasnitski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@
 
 include_recipe 'apt'
 
-packages = %w(vim zip unzip curl wget git cmake make libreadline6-dev
+packages = %w(vim-nox zip unzip curl wget git cmake make libreadline6-dev
               zlib1g-dev libssl-dev libgmp3-dev python-pip libnss-myhostname
-              ruby-dev)
+              ruby-dev pwgen jq)
 
 packages.each do |pkg|
   package pkg do
@@ -32,25 +32,6 @@ packages.each do |pkg|
 end
 
 include_recipe 'ark'
-include_recipe 'golang'
-
-remote_file node['direnv']['path'] do
-  source node['direnv']['release']
-  owner 'root'
-  group 'root'
-  mode '0755'
-  checksum node['direnv']['checksum']
-  action :create
-  notifies :run, 'bash[direnv_shell]', :immediately
-end
-
-bash 'direnv_shell' do
-  code <<-EOH
-  echo 'eval "$(direnv hook bash)"' >> /home/ubuntu/.bashrc
-  EOH
-  user 'ubuntu'
-  action :nothing
-end
 
 ark 'terraform' do
   url node['terraform']['release']
@@ -60,3 +41,5 @@ ark 'terraform' do
   checksum node['terraform']['checksum']
   action :cherry_pick
 end
+
+include_recipe 'golang'

@@ -1,17 +1,16 @@
-settings:
-  parallel: true
+---
+provisioner:
+  name: chef_zero
 
 driver:
   name: docker
-  # privileged is required otherwise the container doesn't boot right
-  privileged: true
 
 platforms:
-- name: ubuntu-14.04
+- name: ubuntu-16.04
   driver:
-    image: ubuntu-upstart:14.04
+    image: ubuntu:xenial
     platform: ubuntu
-    disable_upstart: false
+    privileged: true
     run_command: /sbin/init
     provision_command:
       - /usr/bin/apt-get update

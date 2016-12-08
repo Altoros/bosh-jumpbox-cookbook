@@ -1,0 +1,23 @@
+driver:
+  name: ec2
+  require_chef_omnibus: true
+  instance_type: t2.micro
+  associate_public_ip: true
+  region: eu-central-1
+  aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
+
+provisioner:
+  name: chef_zero
+
+platforms:
+- name: ubuntu-16.04
+  driver:
+    image_id: ami-b0db1ddf
+  transport:
+    ssh_key: <%= File.expand_path(ENV['AWS_SSH_KEY_FILE']) %>
+    username: ubuntu
+
+suites:
+- name: default
+  run_list:
+  - recipe[bosh-jumpbox::default]
