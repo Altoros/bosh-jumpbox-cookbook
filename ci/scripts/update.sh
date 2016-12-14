@@ -25,6 +25,7 @@ cf-cli() {
 }
 
 spiff() {
+	VERSION=$(cat spiff/version)
 	SHASUM=$(shasum -a 256 ./spiff/spiff_linux_amd64 | cut -d " " -f1)
 	OLDSHA=$(egrep -o -E -e "[0-9a-f]{64}" cookbook/attributes/spiff.rb)
 	TAG=$(cat spiff/tag)
@@ -34,6 +35,7 @@ spiff() {
 }
 
 spruce() {
+	VERSION=$(cat spruce/version)
 	SHASUM=$(shasum -a 256 ./spruce/spruce-linux-amd64 | cut -d " " -f1)
 	OLDSHA=$(egrep -o -E -e "[0-9a-f]{64}" cookbook/attributes/spruce.rb)
 	TAG=$(cat spruce/tag)
@@ -43,6 +45,7 @@ spruce() {
 }
 
 fly() {
+	VERSION=$(cat fly/version)
 	SHASUM=$(shasum -a 256 ./fly/fly_linux_amd64 | cut -d " " -f1)
 	OLDSHA=$(egrep -o -E -e "[0-9a-f]{64}" cookbook/attributes/fly.rb)
 	TAG=$(cat fly/tag)
