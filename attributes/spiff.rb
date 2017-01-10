@@ -1,2 +1,2 @@
-default['spiff']['checksum'] = 'a34ee47a75dee89b5195d5901a4230105a5e8249b57b1c63e1c982afacfbc627'
-default['spiff']['release'] = 'https://github.com/cloudfoundry-incubator/spiff/releases/download/v1.0.7/spiff_linux_amd64.zip'
+default['spiff']['checksum'] = 'e5b49b7f32b2b3973536bf2a48beda2d236956bebff7677aa109cc2b71f56002'
+default['spiff']['release'] = 'https://github.com/cloudfoundry-incubator/spiff/releases/download/v1.0.8/spiff_linux_amd64.zip'
