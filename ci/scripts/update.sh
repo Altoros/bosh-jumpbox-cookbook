@@ -26,7 +26,7 @@ cf-cli() {
 
 spiff() {
 	VERSION=$(cat spiff/version)
-	SHASUM=$(shasum -a 256 ./spiff/spiff_linux_amd64 | cut -d " " -f1)
+	SHASUM=$(shasum -a 256 ./spiff/spiff_linux_amd64.zip | cut -d " " -f1)
 	OLDSHA=$(egrep -o -E -e "[0-9a-f]{64}" cookbook/attributes/spiff.rb)
 	TAG=$(cat spiff/tag)
 	OLDTAG=$(grep -o -P "v[0-9]+(\.[0-9]+)*" cookbook/attributes/spiff.rb)

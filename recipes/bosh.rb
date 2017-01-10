@@ -28,13 +28,13 @@ remote_file node['bosh-init']['path'] do
   action :create
 end
 
-remote_file node['spiff']['path'] do
-  source node['spiff']['release']
-  owner 'root'
-  group 'root'
-  mode '0755'
+ark 'spiff' do
+  url node['spiff']['release']
+  creates 'spiff'
+  path node['spiff']['path']
+  mode 0755
   checksum node['spiff']['checksum']
-  action :create
+  action :cherry_pick
 end
 
 ark 'cf' do

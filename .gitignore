@@ -21,3 +21,4 @@ bin/*
 .kitchen.local.yml
 
 ci/secret.yml
+ci/set_pipeline

@@ -22,6 +22,6 @@
 default['bosh-init']['path'] = '/usr/local/bin/bosh-init'
 default['cf']['path'] = '/usr/local/bin/'
 default['fly']['path'] = '/usr/local/bin/fly'
-default['spiff']['path'] = '/usr/local/bin/spiff'
+default['spiff']['path'] = '/usr/local/bin/'
 default['spruce']['path'] = '/usr/local/bin/spruce'
 default['terraform']['path'] = '/usr/local/bin/'
