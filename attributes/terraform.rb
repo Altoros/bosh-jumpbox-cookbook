@@ -1,2 +1,2 @@
-default['terraform']['release'] = 'https://releases.hashicorp.com/terraform/0.8.3/terraform_0.8.3_linux_amd64.zip'
-default['terraform']['checksum'] = 'aa4c64b0595b8e49fc12da79d3efb7fb3f3653230349819699b9db1a76c51f3b'
+default['terraform']['release'] = 'https://releases.hashicorp.com/terraform/0.8.4/terraform_0.8.4_linux_amd64.zip'
+default['terraform']['checksum'] = '297d35d0b4311445cd87ef032d3dec917bcc7a8b163ead28a4c45d966a2f75cc'
