@@ -341,5 +341,3 @@ resources:
     repository: concourse
     release: true
     access_token: {{github-access-token}}
-    globs:
-    - fly_linux_amd64

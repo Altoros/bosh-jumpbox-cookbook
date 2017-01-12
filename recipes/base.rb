@@ -23,7 +23,7 @@ include_recipe 'apt'
 
 packages = %w(vim-nox zip unzip curl wget git cmake make libreadline6-dev
               zlib1g-dev libssl-dev libgmp3-dev python-pip libnss-myhostname
-              ruby-dev pwgen jq)
+              ruby-dev pwgen jq python-openstackclient ipcalc)
 
 packages.each do |pkg|
   package pkg do
