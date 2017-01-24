@@ -1,2 +1,2 @@
-default['spruce']['checksum'] = 'c77dbc02563674b5010993d2e29e25730b99ca6c8c0aad7de51068fcc2658bc7'
-default['spruce']['release'] = 'https://github.com/geofffranks/spruce/releases/download/v1.8.8/spruce-linux-amd64'
+default['spruce']['checksum'] = 'a6662c275dd2e0e278bf140f6382a085313101e220980b664ccd101b862b2ab7'
+default['spruce']['release'] = 'https://github.com/geofffranks/spruce/releases/download/v1.8.9/spruce-linux-amd64'
