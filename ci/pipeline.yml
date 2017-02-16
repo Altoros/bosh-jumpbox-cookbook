@@ -1,6 +1,7 @@
 groups:
 - name: deps
   jobs:
+  - bosh
   - spruce
   - spiff
   - cf-cli
@@ -12,6 +13,39 @@ groups:
   - run-test-kitchen
   - merge-to-master
 jobs:
+- name: bosh
+  serial: true
+  plan:
+  - aggregate:
+    - get: cookbook
+      resource: cookbook
+    - get: cookbook-develop
+      resource: cookbook-develop
+    - get: bosh
+      resource: bosh-cli-release
+      trigger: true
+  - task: update-bosh
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          - repository: andreikrasnitski/dumb-init
+          - tag: latest
+      inputs:
+      - name: cookbook
+      - name: cookbook-develop
+      - name: bosh
+      outputs:
+      - name: cookbook-updated
+      run:
+        path: "cookbook/ci/scripts/update.sh"
+        args:
+        - bosh
+      params:
+        MERGED_REPO: {{cookbook-git-branch-tests}}
+        GIT_USERNAME: {{git-username}}
+        GIT_EMAIL: {{git-email}}
 - name: spruce
   serial: true
   plan:
@@ -299,6 +333,13 @@ resources:
     uri: {{cookbook-git-uri}}
     branch: {{cookbook-git-branch-tests}}
     private_key : {{cookbook-git-key}}
+- name: bosh-cli-release
+  type: github-release
+  source:
+    user: cloudfoundry
+    repository: bosh-cli
+    release: true
+    access_token: {{github-access-token}}
 - name: spruce-release
   type: github-release
   source:

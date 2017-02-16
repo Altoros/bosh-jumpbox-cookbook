@@ -4,6 +4,16 @@ set -e
 
 ARGS=("$@")
 
+bosh() {
+	VERSION=$(cat bosh/version)
+	OLDVERSION=$(grep -o -P "\\s*[v=]*\\s*([0-9]+)\\.([0-9]+)\\.([0-9]+)" cookbook/attributes/bosh.rb)
+	wget --quiet https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-${VERSION}-linux-amd64 --output-document=bosh2-binary --tries=7
+	SHASUM=$(shasum -a 256 ./bosh2-binary | cut -d " " -f1)
+	OLDSHA=$(egrep -o -E -e "[0-9a-f]{64}" cookbook/attributes/bosh.rb)
+	sed -i "s/${OLDVERSION}/${VERSION}/g; s/${OLDSHA}/${SHASUM}/g" cookbook/attributes/bosh.rb
+	update
+}
+
 bosh-init() {
 	VERSION=$(cat bosh-init/version)
 	OLDVERSION=$(grep -o -P "\\s*[v=]*\\s*([0-9]+)\\.([0-9]+)\\.([0-9]+)" cookbook/attributes/bosh-init.rb)

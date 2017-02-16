@@ -19,6 +19,7 @@
 # limitations under the License.
 #
 
+default['bosh']['path'] = '/usr/local/bin/bosh2'
 default['bosh-init']['path'] = '/usr/local/bin/bosh-init'
 default['cf']['path'] = '/usr/local/bin/'
 default['fly']['path'] = '/usr/local/bin/fly'

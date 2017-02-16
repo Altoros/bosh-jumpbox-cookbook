@@ -19,6 +19,15 @@
 # limitations under the License.
 #
 
+remote_file node['bosh']['path'] do
+  source node['bosh']['release']
+  owner 'root'
+  group 'root'
+  mode '0755'
+  checksum node['bosh']['checksum']
+  action :create
+end
+
 remote_file node['bosh-init']['path'] do
   source node['bosh-init']['release']
   owner 'root'
