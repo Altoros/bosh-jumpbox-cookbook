@@ -46,6 +46,9 @@ jobs:
         MERGED_REPO: {{cookbook-git-branch-tests}}
         GIT_USERNAME: {{git-username}}
         GIT_EMAIL: {{git-email}}
+  - put: cookbook-develop
+    params:
+      repository: cookbook-updated
 - name: spruce
   serial: true
   plan:
