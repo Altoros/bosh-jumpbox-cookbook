@@ -1,2 +1,2 @@
-default['fly']['checksum'] = '13183d4afff589c6a7dc42104d472c8463c8bf0d914bf0347f5ed9304e30a1f3'
-default['fly']['release'] = 'https://github.com/concourse/concourse/releases/download/v2.7.6/fly_linux_amd64'
+default['fly']['checksum'] = '003ae5de9623bef6b7c83afbf0fda8f499bc657fedf122164140c294712bb335'
+default['fly']['release'] = 'https://github.com/concourse/concourse/releases/download/v2.7.7/fly_linux_amd64'
